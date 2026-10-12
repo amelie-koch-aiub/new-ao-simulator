@@ -1,0 +1,86 @@
+simulation_id: '82'
+
+# most important
+num_lenslets: 10 # 10 corresponds to (D/r0)**2 at seeing = 1.25" (r0 = 8cm)
+px_scale: !!float 0.5 # [arcsec / px]  -- make sure to stay sensitive to seeing, should be below 1.5"
+seeing: 1.7 # [arcsec] @ 500nm (convention) 
+operation_freq: !!float 1.5e3 # [Hz] WFS cadence
+rcond: !!float 1e-1 #cutoff/svd[0] # this is for truncated method
+probe_amp: !!float 40e-9 # [m] stroke (used during calibration)
+probe_amp_pwfs: !!float 30e-9 # [m] stroke (used during calibration)
+gain: 0.6 # somewhere between 0.0075 and 0.02, depending on seeing
+gain_pwfs: 0.0004
+num_iterations: 250 # corresponds to [ms] if the atmosphere is set to evolve at 1ms speed
+stepsize_wavefronts_to_sample: 10 # can't really go coarser than 70, not enough wavefronts otherwise. 50 is ok. 1 is finest.
+actuator_oversampling: !!float -0.1 # 0.1 adds 10 actuators for a DM with otherwise 100 actuators (number set by Fried sampling)
+comments: 'finding operation freq upper limit in slow wind'
+target_source: 'LEO_spectrum_mag5.fits' # 'LEO.png' # or 
+latency: 1 # 1-frame loop delay
+
+wavelength_wfs: !!float 6000e-10 # [m] -- central wavelength
+wfs_bandwidth: !!float 1000e-10 
+
+
+telescope_diameter: 0.8 # [m]
+focal_length: 5.6 # [m]
+fov_sci: 2 # arcsec -- animation becomes very slow & the point source very small if FOV is large
+
+spider_width: 0.02 # [m] -- this is a guess
+num_spiders: 0
+central_obscuration: !!float 0.1558 # [m]
+
+px_size: !!float 24e-6 # [m] -- Armasuisse report WFS cameras
+fov_wfs: !!float 5 # [arcsec] -- LEO size
+
+sci_cam_px_size: !!float 2.9e-6 # [m] - currently installed camera on ZimMAIN for LEO observations
+
+n_telescope_mirrors: 3
+n_ao_mirrors: 7
+
+# target_spectrum: 'LEO_spectrum_mag5.fits'
+coating_file: 'protected_aluminium_ZimMAIN.csv'
+
+outer_scale: 20 # [m] -- 20m is typical
+tau0: 0.01 # [s] 
+velocity: 3 # m/s
+
+wfs_beamsplit: !!float 1 # 0 (no light into WFS) to 1 (all of the light into WFS)
+
+wavelength_sci: !!float 4750e-10 # [m] -- central wavelength
+sci_bandwidth: !!float 1500e-10
+
+sci_cam_px_size: !!float 2.9e-6 # [m]
+
+sci_exp_time: !!float 0.001 # [s]
+
+wavelength_percentile_to_scale: 0.5 # which wavelength percentile we want calculate spot size for - 0 (bluest), 1 (reddest), 0.5 (mean)
+
+cutoff_below: 0.75 # illumination threshold to use/discard subapertures from slope estimation
+
+interaction_matrix_type: 'modal' # 'modal'
+
+inversion_method: 'truncation'
+
+t_atmos: !!float 0.0005 # this is not the coherence time tau, just the update frequency of atmospheric plots
+include_photon_noise: True
+mag: !!float 0.4
+leakage: !!float 0.01
+playback_speed: 0.05
+
+renew_dm_calibration: True
+
+plotting:
+    response_matrix: True
+    reconstruction_matrix: True
+    calibration_animation: True
+    calibration_animation_pwfs: True
+    example_reconstruction: True
+    ao_animation: True
+    dm_flat: True
+    input_light: True
+    svd: True
+    strehl_evol: True
+    fwhm_evol: True
+    psf_profiles: 
+      - 50
+      - 100
